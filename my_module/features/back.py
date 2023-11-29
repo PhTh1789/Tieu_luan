@@ -1,7 +1,8 @@
 def back_step(func) :
-    option = input("Quay lại \n(0) Không\n(1) Có\n")
-    match option :
-        case "0" :
-            print("END")
-        case "1" :
-            func()
+    while True:
+        option = input("Quay lại giao diện chính\n(0) Không\n(1) Có\n")
+        if (option == "0") :
+            break
+        elif (option == "1") :
+            return func()
+        print("Lựa chọn không phù hợp")
