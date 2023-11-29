@@ -1,8 +1,9 @@
 def back_step(func) :
     while True:
-        option = input("Quay lại giao diện chính\n(0) Không\n(1) Có\n")
+        option = input("Thoát chương trình\n(0) Không\n(1) Có\n-> ")
         if (option == "0") :
-            break
-        elif (option == "1") :
             return func()
+        elif (option == "1") :
+            break
         print("Lựa chọn không phù hợp")
+    print("Chương trình kết thúc")
