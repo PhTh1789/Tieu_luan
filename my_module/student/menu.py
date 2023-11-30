@@ -17,7 +17,9 @@ def get_core(mssv, score_folder_path) :
         print("Lựa chọn không phù hợp")
 
     data = pd.read_excel(score_folder_path + f"\\{subject_list[int(option)]}")
-    #Tham số trong isin() phải là iterable
-    result = data.loc[data["MSSV"].isin([int(mssv),])]
-    
+    result = data[data["MSSV"] == int(mssv)]
+    #Tiến hành reset index vì lấy phần từ trong cột sẽ chọn theo index
+    #Khi không có drop thì dataframe sẽ thêm một cột là index cũ trước reset
+    result = result.reset_index(drop = True)
+
     print("Giữa kỳ: {0}\nCuối kỳ: {1}".format(result["Giữa kỳ"][0], result["Cuối kỳ"][0]))
