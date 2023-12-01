@@ -5,8 +5,8 @@ from my_module.features import back_step
 # from my_module.student import check, get_core
 # from my_module.features import loading_mess
 
-lecture_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
-student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx')
+lecture_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\lecturer.xlsx')
+student_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\student.xlsx')
 
 #Chọn giao diện
 while True :
@@ -25,11 +25,12 @@ def student() :
         print("Tính năng:")
         option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n-> ")
         if (option == "0") :
-            get_core(mssv, r"D:\Code\Python\Tiểu luận - NMLT\score")
+            get_core(mssv, r"C:\Users\Admin\Desktop\python\TL\TLGiang\score")
             back_step(student)
             break
 
         elif (option == "1") :
+            
             pass
         
         elif (option == "2") :
