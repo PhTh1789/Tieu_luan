@@ -1,7 +1,7 @@
 from my_module.features import loading_mess
 
 
-def check(data, mssv_col_name : str,password_col_name : str) :
+def student_checking(data, mssv_col_name : str,password_col_name : str) :
     while True :
         mssv_input = input("MSSV: ")
         password_input = input("Mật khẩu: ")

@@ -1,5 +1,6 @@
 import pandas as pd
-from my_module.student import check, get_core
+from my_module.student import student_checking, get_core
+from my_module.lecturer import lecture_checking
 from my_module.features import back_step
 # from my_module.student import check, get_core
 # from my_module.features import loading_mess
@@ -9,14 +10,16 @@ student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\stude
 
 #Chọn giao diện
 while True :
-    define = input("Bạn là sinh viên (0) hay là giáo viên (1): ")
+    define = input("Bạn là sinh viên (0) hay giảng viên (1):\n-> ")
     if define == "0" :
-        mssv = check(student_data, "MSSV", "Mật khẩu")
+        mssv = student_checking(student_data, "MSSV", "Mật khẩu")
         break
     elif define == "1" :
+        lecture_name = lecture_checking(lecture_data, "Giảng viên", "Mật khẩu")
         break
     
-    print("Chỉ nhập 0 hoặc 1\n--+--")
+    print("Lỗi: Giá trị nhập khác 0 và 1")
+
 def student() :
     while True:
         print("Tính năng:")
@@ -32,10 +35,26 @@ def student() :
         elif (option == "2") :
             pass
 
-        print("Lựa chọn không phù hợp")
+        print("Lỗi: Giá trị nhập không phù hợp")
 
 def lecture() :
-    print("something")
+    while True:
+        print("Tính năng:")
+        option = input("(0) Lập đồ thị\n(1) Xem phản hồi\n(2) Tài liệu\n-> ")
+        if (option == "0") :
+            print("option 0")
+            back_step(lecture)
+            break
+
+        elif (option == "1") :
+            print("option 1")
+            break
+        
+        elif (option == "2") :
+            print("option 2")
+            break
+
+        print("Lỗi: Giá trị nhập không phù hợp")
 
 
 match define :
