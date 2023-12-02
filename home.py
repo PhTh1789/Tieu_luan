@@ -2,8 +2,6 @@ import pandas as pd
 from my_module.student import student_checking, get_core
 from my_module.lecturer import lecture_checking
 from my_module.features import back_step
-# from my_module.student import check, get_core
-# from my_module.features import loading_mess
 
 lecture_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
 student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx')
