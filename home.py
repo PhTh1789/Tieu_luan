@@ -1,7 +1,9 @@
 import pandas as pd
-from my_module.student import student_checking, get_core
+# import openpyxl
+from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecture_checking
 from my_module.features import back_step
+
 # from my_module.student import check, get_core
 # from my_module.features import loading_mess
 
@@ -24,14 +26,15 @@ def student() :
     while True:
         print("Tính năng:")
         option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n-> ")
-        if (option == "0") :
-            get_core(mssv, r"C:\Users\Admin\Desktop\python\TL\TLGiang\score")
+        if (option == "0"):
+            get_core0(get_core(mssv, r"C:\Users\Admin\Desktop\python\TL\TLGiang\score")) #chạy get_core0 với các biến get_core trả về
             back_step(student)
             break
 
         elif (option == "1") :
-            
-            pass
+            get_core1(get_core(mssv, r"C:\Users\Admin\Desktop\python\TL\TLGiang\score"))
+            back_step(student)
+            break            
         
         elif (option == "2") :
             pass
