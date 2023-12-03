@@ -10,9 +10,7 @@ def get_core(mssv, score_folder_path) :
     subject_list = os.listdir(score_folder_path)
     print("Chọn môn: ")
     for index, subject in zip(range(0, len(subject_list)), subject_list) :
-        #Cắt chuỗi bỏ phần định dạng sau dấu chấm
-        subject_name = subject
-        print(f"({index})", subject_name)
+        print(f"({index})", subject)
 
     while True :
         option = input("-> ")
@@ -36,11 +34,13 @@ def get_core0(get):
 # dùng cho option = 1
 def get_core1(get):
     mssv, score_folder_path, subject_list, option = get
-
-    link = score_folder_path + f"\\{subject_list[int(option)]}" + f"\\report.xlsx" # sử dụng nhiều lần nên gán biến
+    #Lấy đường dẫn đến file phản hồi của môn đã chọn
+    link = score_folder_path + f"\\{subject_list[int(option)]}" + f"\\report.xlsx"
     data = pd.read_excel(link)
-    stt = int(np.nan_to_num(data["STT"].max())) # lấy stt mới dựa trên stt cuối cùng (là stt lớn nhất) của file
-    date_now = datetime.now().strftime('%H:%M %d-%b-%y') # ngày dạng hh:mm dd/mmm/yyyy
+    # lấy stt mới dựa trên stt cuối cùng (là stt lớn nhất) của file
+    stt = int(np.nan_to_num(data["STT"].max()))
+    # ngày dạng hh:mm dd/mmm/yyyy
+    date_now = datetime.now().strftime('%H:%M %d-%b-%y') 
 
     # chọn ẩn danh
     while True:
@@ -55,10 +55,8 @@ def get_core1(get):
     #review lời nhắn và gửi
     while True:
         loi_nhan = input("Lời nhắn: ")
-        review = input("Bạn có chắc muốn gửi lời nhắn này?\n(0) Thay doi loi nhan\n(1) Gui\n(Huy) Thoat\n-> ")
+        review = input("Bạn có chắc muốn gửi lời nhắn này?\n(0) Gửi\n(1) Chỉnh sửa\n(2) Thoát\n-> ")
         if (review == "0"):
-            pass
-        elif (review == "1"):
             wb = openpyxl.load_workbook(link) #mở file
             sheet = wb['Sheet1'] #chọn Sheet
             # Thêm hàng mới 
@@ -67,7 +65,9 @@ def get_core1(get):
             print("Gửi thành công!", end = "")
             loading_mess(3, 1, "")
             break
-        elif (review == "Huy"):
+        elif (review == "1"):
+            continue
+        elif (review == "2"):
             break
         else:
             print("Lựa chọn không phù hợp")
