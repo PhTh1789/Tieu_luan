@@ -4,8 +4,9 @@ from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecture_checking
 from my_module.features import back_step
 
-lecture_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
-student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx')
+lecture_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\lecturer.xlsx')
+student_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\student.xlsx')
+score_data = r"C:\Users\Admin\Desktop\python\TL\TLGiang\score"
 
 #Chọn giao diện
 while True :
@@ -16,7 +17,8 @@ while True :
         break
     elif define == "1" :
         print('\n')
-        lecture_name = lecture_checking(lecture_data, "Giảng viên", "Mật khẩu")
+        lecture_id = lecture_checking(lecture_data, "Mã giảng viên", "Mật khẩu")
+        print(lecture_id)
         break
     
     print("Lỗi: Giá trị nhập khác 0 và 1")
@@ -27,13 +29,13 @@ def student() :
         option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n-> ")
         if (option == "0"):
             print('\n')
-            get_core0(get_core(mssv, r"D:\Code\Python\Tiểu luận - NMLT\score")) #chạy get_core0 với các biến get_core trả về
+            get_core0(get_core(mssv, score_data )) #chạy get_core0 với các biến get_core trả về
             back_step(student)
             break
 
         elif (option == "1") :
             print('\n')
-            get_core1(get_core(mssv, r"D:\Code\Python\Tiểu luận - NMLT\score"))
+            get_core1(get_core(mssv, score_data))
             back_step(student)
             break            
         
@@ -54,7 +56,7 @@ def lecture() :
             break
 
         elif (option == "1") :
-            print('\n')
+            print('\n') 
             print("option 1")
             break
         

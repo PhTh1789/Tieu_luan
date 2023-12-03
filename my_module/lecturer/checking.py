@@ -3,12 +3,12 @@ from my_module.features import loading_mess
 
 def lecture_checking(data, lecture_col_name : str,password_col_name : str) :
     while True :
-        lecture_name = input("Họ và tên: ")
+        lecture_id = input("Mã giảng viên: ")
         password_input = input("Mật khẩu: ")
-        for name, password in zip(data[lecture_col_name], data[password_col_name]) :
-            if lecture_name == str(name) and password_input == str(password) :
+        for id, password in zip(data[lecture_col_name], data[password_col_name]) :
+            if lecture_id == str(id) and password_input == str(password) :
                 print("Đăng nhập thành công\n")
-                return lecture_name
+                return lecture_id
         print("Tài khoản hoặc mật khẩu không chính xác")
 
         loading_mess(3, 1)
