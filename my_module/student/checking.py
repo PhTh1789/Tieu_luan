@@ -7,7 +7,7 @@ def student_checking(data, mssv_col_name : str,password_col_name : str) :
         password_input = input("Mật khẩu: ")
         for mssv, password in zip(data[mssv_col_name], data[password_col_name]) :
             if mssv_input == str(mssv) and password_input == str(password) :
-                print("Đăng nhập thành công")
+                print("Đăng nhập thành công\n")
                 return mssv_input
         print("Tài khoản hoặc mật khẩu không chính xác")
 
