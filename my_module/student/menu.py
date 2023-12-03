@@ -20,7 +20,7 @@ def get_core(mssv, score_folder_path) :
         print("Lựa chọn không phù hợp")
     return mssv, score_folder_path, subject_list, option
 
-# dùng cho option = 0
+#CHỨC NĂNG XEM ĐIỂM
 def get_core0(get):
     mssv, score_folder_path, subject_list, option = get #lấy từ hàm get_core trả về
     data = pd.read_excel(score_folder_path + f"\\{subject_list[int(option)]}" + f"\\{subject_list[int(option)]}.xlsx")
@@ -29,9 +29,9 @@ def get_core0(get):
     #Khi không có drop thì dataframe sẽ thêm một cột là index cũ trước reset
     result = result.reset_index(drop = True)
 
-    print("Giữa kỳ: {0}\nCuối kỳ: {1}".format(result["Giữa kỳ"][0], result["Cuối kỳ"][0]))
+    print("Giữa kỳ: {0}\nCuối kỳ: {1}\n".format(result["Giữa kỳ"][0], result["Cuối kỳ"][0]))
 
-# dùng cho option = 1
+#CHỨC NĂNG PHẢN HỒI
 def get_core1(get):
     mssv, score_folder_path, subject_list, option = get
     #Lấy đường dẫn đến file phản hồi của môn đã chọn
@@ -40,7 +40,8 @@ def get_core1(get):
     # lấy stt mới dựa trên stt cuối cùng (là stt lớn nhất) của file
     stt = int(np.nan_to_num(data["STT"].max()))
     # ngày dạng hh:mm dd/mmm/yyyy
-    date_now = datetime.now().strftime('%H:%M %d-%b-%y') 
+    date_now = datetime.now().strftime('%H:%M %d-%b-%y')
+    print('\n')
 
     # chọn ẩn danh
     while True:
@@ -51,6 +52,7 @@ def get_core1(get):
             mssv = "Ẩn danh"
             break
         print("Lựa chọn không phù hợp")
+    print('\n')
 
     #review lời nhắn và gửi
     while True:
@@ -64,10 +66,12 @@ def get_core1(get):
             wb.save(link) #lưu lại trên file đang thao tác
             print("Gửi thành công!", end = "")
             loading_mess(3, 1, "")
+            print('\n')
             break
         elif (review == "1"):
             continue
         elif (review == "2"):
+            print('\n')
             break
         else:
             print("Lựa chọn không phù hợp")
