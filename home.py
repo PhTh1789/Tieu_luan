@@ -4,9 +4,6 @@ from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecture_checking
 from my_module.features import back_step
 
-# from my_module.student import check, get_core
-# from my_module.features import loading_mess
-
 lecture_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\lecturer.xlsx')
 student_data = pd.read_excel(r'C:\Users\Admin\Desktop\python\TL\TLGiang\account\student.xlsx')
 
