@@ -4,8 +4,8 @@ from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecture_checking
 from my_module.features import back_step
 
-lecture_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
-student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx')
+lecture_data = pd.read_excel(r'D:\PYTHON\Tieu_luan\account\lecturer.xlsx')
+student_data = pd.read_excel(r'D:\PYTHON\Tieu_luan\account\student.xlsx')
 
 #Chọn giao diện
 while True :
@@ -27,13 +27,13 @@ def student() :
         option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n-> ")
         if (option == "0"):
             print('\n')
-            get_core0(get_core(mssv, r"D:\Code\Python\Tiểu luận - NMLT\score")) #chạy get_core0 với các biến get_core trả về
+            get_core0(get_core(mssv, r"D:\PYTHON\Tieu_luan\score")) #chạy get_core0 với các biến get_core trả về
             back_step(student)
             break
 
         elif (option == "1") :
             print('\n')
-            get_core1(get_core(mssv, r"D:\Code\Python\Tiểu luận - NMLT\score"))
+            get_core1(get_core(mssv, r"D:\PYTHON\Tieu_luan\score"))
             back_step(student)
             break            
         

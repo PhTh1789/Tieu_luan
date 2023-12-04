@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-subject_list = os.listdir(r"C:\Users\Admin\Desktop\python\TL\TLGiang\score")
+subject_list = os.listdir(r"D:\PYTHON\Tieu_luan\score")
 print(subject_list)
 print("Chọn môn: ")
 
@@ -17,7 +17,7 @@ while True :
         break
     print("Lựa chọn không phù hợp")
 
-score_folder_path = r"C:\Users\Admin\Desktop\python\TL\TLGiang\score"
+score_folder_path = r"D:\PYTHON\Tieu_luan\score"
 data = pd.read_excel(score_folder_path + f"\\{subject_list[int(option)]}" + f"\\{subject_list[int(option)]}.xlsx")
 print((score_folder_path + f"\\{subject_list[int(option)]}"))
 result = data[data["MSSV"] == int(22166101)]
