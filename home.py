@@ -9,7 +9,7 @@ student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\stude
 
 #Chọn giao diện
 while True :
-    define = input("Bạn là sinh viên (0) hay giảng viên (1):\n-> ")
+    define = input("Bạn là\n(0) Sinh viên\n(1) Giảng viên\n-> ")
     if define == "0" :
         print('\n')
         mssv = student_checking(student_data, "MSSV", "Mật khẩu")
