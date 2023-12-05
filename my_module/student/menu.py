@@ -58,8 +58,10 @@ def get_core1(get):
     data = pd.read_excel(link)
     # lấy stt mới dựa trên stt cuối cùng (là stt lớn nhất) của file
     stt = int(np.nan_to_num(data["STT"].max()))
-    # ngày dạng hh:mm dd/mmm/yyyy
-    date_now = datetime.now().strftime('%H:%M %d-%b-%y')
+    #Not a Number
+    # ngày dạng hh:mm dd/mmm/yy
+    date_now = datetime.now().strftime('%d-%b-%y')
+    time_now = datetime.now().strftime('%H:%M')
     print('\n')
 
     # chọn ẩn danh
@@ -81,12 +83,12 @@ def get_core1(get):
             wb = openpyxl.load_workbook(link) #mở file
             sheet = wb['Sheet1'] #chọn Sheet
             # Thêm hàng mới 
-            sheet.append([stt + 1, date_now, mssv, loi_nhan])
+            sheet.append([stt + 1, time_now, date_now, mssv, loi_nhan])
             wb.save(link) #lưu lại trên file đang thao tác
-            print("Gửi thành công!", end = "")
-            loading_mess(3, 1, "")
+            loading_mess(3, 1, "Gửi thành công!")
             print('\n')
             break
+
         elif (review == "1"):
             continue
         elif (review == "2"):
