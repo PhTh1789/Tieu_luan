@@ -17,7 +17,7 @@ while True :
         break
     elif define == "1" :
         print('\n')
-        lecturer_id = lecturer_checking(lecturer_data, "Mã giảng viên", "Mật khẩu")
+        lecturer_id = lecture_checking(lecturer_data, "Mã giảng viên", "Mật khẩu")
         break
     
     print("Lỗi: Giá trị nhập khác 0 và 1")
