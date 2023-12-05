@@ -30,7 +30,26 @@ def get_core0(get):
     result = result.reset_index(drop = True)
 
     print("Giữa kỳ: {0}\nCuối kỳ: {1}\n".format(result["Giữa kỳ"][0], result["Cuối kỳ"][0]))
+    #GK: 30% CK: 70%
+    sum_ = result["Giữa kỳ"][0]*0.3 + result["Cuối kỳ"][0]*0.7
+    if (sum_ >= 8.5) :
+        four = "A"
+        status = "Đạt"
+    elif (sum_ >= 7.4) :
+        four = "B"
+        status = "Đạt"
+    elif (sum_ >= 5.5) :
+        four = "C"
+        status = "Đạt"
+    elif (sum_ >= 4) :
+        four = "D"
+        status = "Đạt"
+    else :
+        four = "F"
+        status = "Chưa đạt"
 
+    print("Hệ 10: {0}\nHệ 4: {1}\nTrạng thái: {2}\n".format(round(sum_, 2), four, status))
+    
 #CHỨC NĂNG PHẢN HỒI
 def get_core1(get):
     mssv, score_folder_path, subject_list, option = get
