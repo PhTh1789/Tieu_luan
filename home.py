@@ -2,7 +2,7 @@ import pandas as pd
 # import openpyxl
 from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecture_checking
-from my_module.features import back_step
+from my_module.features import back_step, up_book
 
 lecture_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
 student_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx')
@@ -60,7 +60,9 @@ def lecture() :
         
         elif (option == "2") :
             print('\n')
-            print("option 2")
+            #Sử dụng tài liệu file client_secrets.json và mycreds.txt để xác thực và cấp quyền cho tải file
+            up_book()
+            back_step(lecture)
             break
 
         print("Lỗi: Giá trị nhập không phù hợp")
