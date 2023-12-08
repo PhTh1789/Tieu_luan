@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt 
 import pandas as pd
 import os
+from .menu import pick_semester
 # from my_module.features import back_step
 
 # Đường dẫn tới folder score
@@ -28,58 +29,43 @@ def get_coree( score_folder_path) :
     global xlsx_global_path
     xlsx_global_path = xlsx_path
     return  xlsx_path,subject_list, option
-    # Chọn cột điểm muốn xem
-def pick_semester():
-    while True:
-            semester = input("Hãy chọn cột điểm: \n(0) Giữa kỳ \n(1) Cuối kỳ \n(2) Cả hai \n-->" )
-            if semester == "0":
-                semester = "Giữa kỳ"
-                break
-            elif semester == "1":
-                semester = "Cuối kỳ"
-                break
-            elif semester == "2" :
-                semester = "Cả hai"
-                break
-            else:
-                print("Hãy chọn đúng định dạng")
-    return semester
+
     
-# HÀM LẤY DỮ LIỆU CỘT
+# LẤY DỮ LIỆU CỘT
 def colum_data(colum_name):
         # gán biến của get_scoree vào
-        semester = pick_semester()
-        colum_name = semester
         colum_name1 = 0
-        # if semester == "Cả Hai":
+        # if colum_name == "Cả Hai":
         #     colum_name = "Giữa kỳ"
         #     colum_name1 = "Cuối kỳ"
         #     data = data_excel[colum_name].tolist()
         #     data1 = data_excel[colum_name1].tolist()
         #     print ("data_1",data)
         #     print("data1",data1)
-        # Đọc dữ liệu từ file Excel
-        semester == "Giữa kỳ" or semester == "Cuối kỳ"
-        data_excel = pd.read_excel(xlsx_global_path)
-        # Đọc dữ liệu của cột colum_name
-        data = data_excel[colum_name].tolist()
+        # Đọc dữ liệu của cột colum_name ( Giữa kỳ / Cuối kỳ )
+        if colum_name == "Giữa kỳ" or colum_name == "Cuối kỳ":
+            data_excel = pd.read_excel(xlsx_global_path)
+            data = data_excel[colum_name].tolist()
         return data
 
-# HÀM ĐẾM SỐ ĐIỂM
+# HÀM ĐẾM SỐ ĐIỂM CỦA HỌC KỲ 
 def count_score(data_score):
+    # dữ liệu lấy từ colum data trả về dạng dictionary
     data_dict = {}
+    # list rỗng để có thể thâm các value của data_dict 
     value_list= []
     # Tạo danh sách các cặp (phần tử, số lần xuất hiện)
     for element in data_score:
         data_dict[element] = data_dict.get(element, 0) + 1
-    # sort theo điểm từ bé tới lớn
+    # sort theo điểm từ bé tới lớn và trả vào sort_list
     sort_list = sorted(data_dict)
+    # lấy value của từng key trong data dict
     for i in sort_list: 
         value_list.append(data_dict[i])
     return sort_list,value_list
 # HÀM CHART
-def scatter_chart():
-    sort_list,value_list = count_score(colum_data(any))
+def scatter_chart(sort_list,value_list):
+    # sort_list,value_list = count_score(colum_data())
     x = sort_list
     y = value_list
     plt.style.use ('seaborn-v0_8-whitegrid')
@@ -99,22 +85,36 @@ def pick_class():
             print("Hãy chọn lớp muốn vẽ đồ thị: ")
             for i in range(0,len(class_sheet)):
                  print((f"({i}) {class_sheet[i]}"))
-            print(f"{len(class_sheet)+1} Cả hai")
+            print(f"({len(class_sheet)}) Cả hai")
             num_objects = int(input("-->"))
             #num_objects = int(input(f"Hãy chọn lớp muốn vẽ đồ thị: \n(1) {class_sheet[0]}   \n(2) {class_sheet[1]} \n(3) So sánh 2 lớp \n-->"))
             if num_objects in range(0,len(class_sheet)):
-                chose = int(input("Chọn kiểu biểu đồ: \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố \n(3) Histogram - Biểu đồ tần suất \nHoặc nhập bất kỳ số nào khác để quay lại\nHoặc nhập bất kỳ số nào khác để quay lại\n-->"))
-                if chose == 1:
-                    scatter_chart()
+                semester = pick_semester()
+                data_score = colum_data(semester)
+                sort_list,value_list = count_score(data_score)
+                chosse = int(input("Chọn kiểu biểu đồ: \
+                                   \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố \
+                                   \n(2) Histogram - Biểu đồ tần suất \
+                                   \nHoặc nhập bất kỳ số nào khác để quay lại\
+                                   \n-->"))
+                if chosse == 1:
+                    scatter_chart(sort_list,value_list)
+                    break
+                elif chosse == 2:
+                    break
+                elif chosse == 3:
+                    print("histogram ")
                     break
             elif num_objects == "Cả hai":
-                chose = int(input("Chọn kiểu biểu đồ: \n(1) Pie chart - Biểu đồ tròn \n(2) Scatter chart - Biểu đồ thể hiện sự phân bố \n(3) Histogram - Biểu đồ tần suất \nHoặc nhập bất kỳ số nào khác để quay lại \n-->" ))
-                if chose == 1:
+                chosse = int(input("Chọn kiểu biểu đồ: \
+                                   \n(1) Pie chart - Biểu đồ tròn \
+                                   \n(2) Scatter chart - Biểu đồ thể hiện sự phân bố \n(3) Histogram - Biểu đồ tần suất \nHoặc nhập bất kỳ số nào khác để quay lại \n-->" ))
+                if chosse == 1:
                     print("pie_chart ")
                     break
-                elif chose == 2:
+                elif chosse == 2:
                     break
-                elif chose == 3:
+                elif chosse == 3:
                     print("histogram ")
                     break
             # Trường hợp là số nhưng ngoài giá trị

@@ -35,3 +35,20 @@ def get_report(lecturer_id,score, lecturer_data):
         else:
            print("Lỗi: Giá trị nhập không phù hợp")
 
+## CHỌN HỌC KỲ
+def pick_semester():
+    while True:
+            semester = input("Hãy chọn cột điểm: \n(0) Giữa kỳ \n(1) Cuối kỳ \n(2) Cả hai \n-->" )
+            if semester == "0":
+                semester = "Giữa kỳ"
+                break
+            elif semester == "1":
+                semester = "Cuối kỳ"
+                break
+            elif semester == "2" :
+                semester = "Cả hai"
+                break
+            else:
+                print("Hãy chọn đúng định dạng")
+    return semester
+
