@@ -2,7 +2,7 @@ import pandas as pd
 # import openpyxl
 from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecturer_checking, get_report
-from my_module.features import back_step, up_book
+from my_module.features import back_step, up_book, loading_mess
 
 lecturer_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
 student_data_path = r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx'
@@ -14,6 +14,9 @@ while True :
     if define == "0" :
         print('\n')
         mssv = student_checking(student_data_path, "MSSV", "Mật khẩu")
+        if (mssv == "datlaimatkhau") :
+            print('\n')
+            mssv = student_checking(student_data_path, "MSSV", "Mật khẩu")
         break
     elif define == "1" :
         print('\n')
