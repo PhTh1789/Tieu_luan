@@ -4,12 +4,12 @@ import numpy as np
 
 
 def student_checking(data_path, mssv_col_name : str,password_col_name : str) :
+    data = pd.read_excel(data_path, sheet_name=None)
     count = 0
     while count < 3 :
         mssv_input = input("MSSV: ")
         password_input = input("Mật khẩu: ")
 
-        data = pd.read_excel(data_path, sheet_name=None)
         for sheet in list(data.keys()) :
             for mssv, password in zip(data[sheet][mssv_col_name], data[sheet][password_col_name]) :
                 if mssv_input == str(mssv) and password_input == str(password) :
@@ -49,10 +49,18 @@ def student_checking(data_path, mssv_col_name : str,password_col_name : str) :
                 #Tìm ra vị trí thay đổi mật khẩu dựa trên mssv
                 for mssv, idx in zip(data[sheet][mssv_col_name], range(0, len(data[sheet][mssv_col_name]))) :
                     if mssv_input_capcha == str(mssv) :
-                        data[sheet].loc[idx, "Mật khẩu"] = repass
-                        loading_mess(3, 1, mess="Đang thiết lập lại mật khẩu")
+                        try :
+                            data[sheet].loc[idx, password_col_name] = repass
+                            loading_mess(3, 1, mess="Đang thiết lập lại mật khẩu")
+                        #Nếu cột dữ liệu chuyển đổi không phù hợp kiểu dữ liệu với nhau
+                        except :
+                            data[sheet][password_col_name].astype(object)
+                            data[sheet].loc[idx, password_col_name] = repass
+                            loading_mess(3, 1, mess="Đang thiết lập lại mật khẩu")
+                            break
             break
         print("Sai capcha\n")
+    #Lưu lại thay đổi
     with pd.ExcelWriter(data_path, engine='openpyxl') as writer:
         for sheet, value in data.items() :
             value.to_excel(writer, sheet_name=sheet, index=False)

@@ -4,7 +4,7 @@ from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecturer_checking, get_report
 from my_module.features import back_step, up_book, loading_mess
 
-lecturer_data = pd.read_excel(r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx')
+lecturer_data_path = r'D:\Code\Python\Tiểu luận - NMLT\account\lecturer.xlsx'
 student_data_path = r'D:\Code\Python\Tiểu luận - NMLT\account\student.xlsx'
 score_data = r"D:\Code\Python\Tiểu luận - NMLT\score"
 
@@ -20,7 +20,10 @@ while True :
         break
     elif define == "1" :
         print('\n')
-        lecturer_id = lecturer_checking(lecturer_data, "Mã giảng viên", "Mật khẩu")
+        lecturer_id = lecturer_checking(lecturer_data_path, "Mã giảng viên", "Mật khẩu")
+        if (lecturer_id == "datlaimatkhau") :
+            print('\n')
+            lecturer_id = lecturer_checking(lecturer_data_path, "Mã giảng viên", "Mật khẩu")
         break
     
     print("Lỗi: Giá trị nhập khác 0 và 1")
