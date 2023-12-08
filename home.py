@@ -30,52 +30,58 @@ while True :
 
 def student() :
     while True:
-        print("Tính năng:")
-        option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n-> ")
+        print(f"\nTài khoản: {mssv}\nTính năng:")
+        option = input("(0) Xem điểm\n(1) Phản hồi\n(2) Tài liệu\n(3) Thoát\n-> ")
         if (option == "0"):
             print('\n')
             get_core0(get_core(mssv, score_data)) #chạy get_core0 với các biến get_core trả về
-            back_step(student)
+            back_step(name_function=student, mess="Quay lại")
             break
 
         elif (option == "1") :
             print('\n')
             get_core1(get_core(mssv, score_data))
-            back_step(student)
+            back_step(name_function=student, mess="Quay lại")
             break            
         
         elif (option == "2") :
+            print('\nTruy cập đường dẫn dưới đây:\n-> https://drive.google.com/drive/u/0/folders/1AP1E0aOiem_1WkJriombjLfZyaLuiq9b')
             print('\n')
-            pass
+            back_step(name_function=student, mess="Quay lại")
+            break
+
+        elif (option == "3") :
+            print('\nChương trình kết thúc')
+            break
 
         print("Lỗi: Giá trị nhập không phù hợp")
 
 def lecturer() :
     while True:
         print(f"\nTài khoản: {lecturer_id}\nTính năng:")
-        option = input("(0) Lập đồ thị\n(1) Xem phản hồi\n(2) Tài liệu\n(3) Đóng chương trình\n -> ")
+        option = input("(0) Lập đồ thị\n(1) Xem phản hồi\n(2) Tài liệu\n(3) Thoát\n -> ")
         if (option == "0") :
             print('\n')
             print("option 0")
-            back_step(lecturer)
+            back_step(name_function=lecturer, mess="Quay lại")
             break
 
         elif (option == "1") :
             print('\n') 
             get_report(lecturer_id, score_data, lecturer_data)
             lecturer()
+            back_step(name_function=lecturer, mess="Quay lại")
             break
         
         elif (option == "2") :
             print('\n')
             #Sử dụng tài liệu file client_secrets.json và mycreds.txt để xác thực và cấp quyền cho tải file
             up_book()
-            back_step(lecturer)
+            back_step(name_function=lecturer, mess="Quay lại")
             break
         
         elif (option == "3") :
-            print('\n')
-            back_step(lecturer)
+            print('\nChương trình kết thúc')
             break
 
         print("Lỗi: Giá trị nhập không phù hợp")
