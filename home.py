@@ -2,10 +2,10 @@ import pandas as pd
 # import openpyxl
 from my_module.student import student_checking, get_core, get_core0, get_core1
 from my_module.lecturer import lecturer_checking, get_report
-from my_module.features import back_step, up_book
+from my_module.features import back_step, up_book, loading_mess
 
-lecture_data = pd.read_excel(r'D:\PYTHON\Tieu_luan\account\lecturer.xlsx')
-student_data = r'D:\PYTHON\Tieu_luan\account\student.xlsx'
+lecturer_data_path = r'D:\PYTHON\Tieu_luan\account\lecturer.xlsx'
+student_data_path = r'D:\PYTHON\Tieu_luan\account\student.xlsx'
 score_data = r"D:\PYTHON\Tieu_luan\score"
 
 #Chọn giao diện
@@ -13,11 +13,17 @@ while True :
     define = input("Bạn là\n(0) Sinh viên\n(1) Giảng viên\n-> ")
     if define == "0" :
         print('\n')
-        mssv = student_checking(student_data, "MSSV", "Mật khẩu")
+        mssv = student_checking(student_data_path, "MSSV", "Mật khẩu")
+        if (mssv == "datlaimatkhau") :
+            print('\n')
+            mssv = student_checking(student_data_path, "MSSV", "Mật khẩu")
         break
     elif define == "1" :
         print('\n')
-        lecturer_id = lecturer_checking(lecture_data, "Mã giảng viên", "Mật khẩu")
+        lecturer_id = lecturer_checking(lecturer_data_path, "Mã giảng viên", "Mật khẩu")
+        if (lecturer_id == "datlaimatkhau") :
+            print('\n')
+            lecturer_id = lecturer_checking(lecturer_data_path, "Mã giảng viên", "Mật khẩu")
         break
     
     print("Lỗi: Giá trị nhập khác 0 và 1")
@@ -58,7 +64,7 @@ def lecturer() :
         # Nhánh xem phản hồi
         elif (option == "1") :
             print('\n') 
-            get_report(lecturer_id, score_data, lecture_data)
+            get_report(lecturer_id, score_data, lecturer_data_path)
             lecturer()
             break
         
