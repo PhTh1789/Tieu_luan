@@ -1,2 +1,3 @@
 from .checking import lecturer_checking
-from .menu import get_report
+from .menu import *
+from .chart import get_chart

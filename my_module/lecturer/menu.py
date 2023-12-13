@@ -1,9 +1,10 @@
-from datetime import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np 
 import os
-from back2 import *
+from datetime import datetime
+from my_module.lecturer.back2 import *
+# from back2 import back_step2
 
 def get_report(lecturer_id,score, lecturer_data):
     data = lecturer_data #gán lại cho gọn
@@ -39,16 +40,17 @@ def get_report(lecturer_id,score, lecturer_data):
            print("Lỗi: Giá trị nhập không phù hợp")
 
 ## CHỌN MÔN-----------------------------------------------------------------------------------------------
-def get_coree( score_folder_path) :
-    subject_list = os.listdir(score_folder_path)
-    # Lấy danh sách các folder có trong đường dẫn
-    print("Chọn môn: ")
-    # In danh sách tên các folder 
-    for index, subject in zip(range(0, len(subject_list)), subject_list) :
-        print(f"({index})", subject)
+def get_subject( score_folder_path) :
+    
     # input chọn môn theo số
     while True :
         try:
+            subject_list = os.listdir(score_folder_path)
+    # Lấy danh sách các folder có trong đường dẫn
+            print("Chọn môn: ")
+            # In danh sách tên các folder 
+            for index, subject in zip(range(0, len(subject_list)), subject_list) :
+                print(f"({index})", subject)
             option = int(input("-> "))
             #Nếu lựa chọn nằm trong index của subject_list thì được xem là phù hợp
             if option in range(0, len(subject_list)) :
@@ -410,7 +412,8 @@ def pie_chart1(range_, bins, semester , class_ , subject ):
     plt.show();
 
 ## pie chart 2 đối tượng
-def pie_chart2(range_1, binss1, range_2 , binss2 ,subject , colum_name1 = any , colum_name2 = any , class_ = any, class_1 = any, class_2 = any, semester = any ):
+def pie_chart2(range_1, binss1, range_2 , binss2 ,subject , 
+               colum_name1 = any , colum_name2 = any , class_ = any, class_1 = any, class_2 = any, semester = any ):
     # sort_list,value_list = count_score(colum_data())
     labels_1 = []
     size1 = [valu for valu in range_1 if valu !=0]
