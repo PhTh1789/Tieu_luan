@@ -6,6 +6,7 @@ from datetime import datetime
 from my_module.lecturer.back2 import *
 # from back2 import back_step2
 
+
 def get_report(lecturer_id,score, lecturer_data):
     data = lecturer_data #gán lại cho gọn
     subject = data[data["Mã giảng viên"] == str(lecturer_id)]
@@ -40,29 +41,38 @@ def get_report(lecturer_id,score, lecturer_data):
            print("Lỗi: Giá trị nhập không phù hợp")
 
 ## CHỌN MÔN-----------------------------------------------------------------------------------------------
-def get_subject( score_folder_path) :
-    
+def pick_subject() :
+    score_folder_path = r"D:\PYTHON\Tieu_luan\score"
+    subject_list = os.listdir(score_folder_path)
     # input chọn môn theo số
     while True :
         try:
-            subject_list = os.listdir(score_folder_path)
     # Lấy danh sách các folder có trong đường dẫn
             print("Chọn môn: ")
             # In danh sách tên các folder 
             for index, subject in zip(range(0, len(subject_list)), subject_list) :
                 print(f"({index})", subject)
+            print(f"({len(subject_list)}) Quay lại")
             option = int(input("-> "))
             #Nếu lựa chọn nằm trong index của subject_list thì được xem là phù hợp
-            if option in range(0, len(subject_list)) :
+            if option in range(len(subject_list)) :
+                # đường dẫn tới file excel sau khi chọn môn
+                xlsx_path = score_folder_path + f"\\{subject_list[int(option)]}" + f"\\{subject_list[int(option)]}.xlsx"
+                # gán biến tên môn
+                subject = subject_list[option]
+                # gọi ra tên của tất cả các lớp học có trong file
+                class_sheet=pd.ExcelFile(xlsx_path).sheet_names
                 break
+            elif option == len(subject_list):
+                return
             else:
                 print("Lựa chọn không phù hợp")
         except:
             print("Lỗi: Sai định dạng \nHãy nhập lại", end="")
-    # đường dẫn tới file excel sau khi chọn môn
-    xlsx_path = score_folder_path + f"\\{subject_list[int(option)]}" + f"\\{subject_list[int(option)]}.xlsx"
+    
+    
     # trả về đường dẫn file excel, list môn học, lựa chọn
-    return  xlsx_path,subject_list, option
+    return  xlsx_path,subject, class_sheet,option
 
 ## CHỌN LỚP
 def pick_class(class_sheet):
@@ -91,9 +101,13 @@ def pick_class2(class_sheet):
 
 
 ## CHỌN HỌC KỲ---------s-----------------------------------------------------------------------------------
-def pick_semester():
+def pick_semester(mess = "quay lại"):
     while True:
-            semester = input("Hãy chọn cột điểm: \n(0) Giữa kỳ \n(1) Cuối kỳ \n(2) Cả hai \
+            semester = input(f"Hãy chọn cột điểm: \
+                             \n(0) Giữa kỳ \
+                             \n(1) Cuối kỳ \
+                             \n(2) Cả hai \
+                             \n(3) {mess} \
                              \n-->" )
             if semester == "0":
                 semester = "Giữa kỳ"
@@ -104,10 +118,10 @@ def pick_semester():
             elif semester == "2" :
                 semester = "Cả hai"
                 break
-            # elif semester == "3" :
-            #     break
+            elif semester == "3":
+                break
             else:
-                print("Hãy chọn đúng định dạng")
+                print("Hãy nhập đúng giá trị đã cho (0),(1),(2),(3)")
     return semester
 
 ## LẤY DỮ LIỆU 1 colum--------------------------------------------------------------------------------------------
@@ -480,3 +494,153 @@ def pie_chart2(range_1, binss1, range_2 , binss2 ,subject ,
                     )
     plt.show();
 
+def one_object(num_class,class_sheet,subject,xlsx_path):
+    ## gán biến tên lớp
+        class_=class_sheet[num_class]
+    ## Chọn học kỳ và gán biến tên học kỳ
+        semester = pick_semester(mess = "Nhập lại")
+    ## 2 học kỳ
+        if semester == "Cả hai":
+        # gán biến lần lượt: data học kỳ số 1, data học kỳ số 2, tên học kỳ số 1, tên học kỳ số 2 được lấy ra từ hàm colum
+            data_sem1 , data_sem2 , colum_name1 , colum_name2 = colum_data2_1c(xlsx_path,semester,class_)
+            while True:
+                choose = input("Chọn kiểu biểu đồ: \
+                                   \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố \
+                                   \n(2) Histogram - Biểu đồ tần suất \
+                                   \n(3) Pie chart - Biểu đồ tròn \
+                                   \n(4) Quay lại\
+                                   \n--> ")
+            # Scatter chart 
+                if choose == "1":
+                    scatter_chart1(data_sem1,data_sem2,subject,class_,colum_name1,colum_name2)
+                    break
+            # histogram
+                elif choose == "2":
+                    hist_chart2(data_hist1 = data_sem1,
+                                data_hist2 = data_sem2,
+                                subject = subject,
+                                colum_name1 = colum_name1,
+                                colum_name2 = colum_name2,
+                                class_ = class_)
+                    break
+            # Pie chart 
+                elif choose == "3":
+                    range_1, binss1, range_2 , binss2 = range_data2(data_sem1 , data_sem2)
+                    pie_chart2(range_1, binss1, range_2 , binss2 ,subject , 
+                               colum_name1 , colum_name2,class_ )
+                    break
+                elif choose == "4":
+                    one_object(num_class,class_sheet,subject,xlsx_path)
+                    break
+                else:
+                    print("Hãy nhập đúng giá trị phù hợp")
+    ## 1 học kỳ
+        elif semester == "Cuối kỳ" or semester =="Giữa kỳ":
+            # lấy cột điểm
+            data_score = colum_data1_1c(xlsx_path,semester,class_)
+                # chọn kiểu biểu đồ
+            while True:
+                choose = input("Chọn kiểu biểu đồ: \
+                               \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố \
+                               \n(2) Histogram - Biểu đồ tần suất \
+                               \n(3) Pie chart - Biểu đồ tròn \
+                               \n(4) Quay lại\
+                               \n--> ")
+            ## scatter     
+                if choose == "1":
+                # sort key và value
+                    sort_list,value_list = count_score(data_score)
+                    scatter_chart1(sort_list,value_list,subject,class_,semester = semester)
+                    break
+            ## histogram
+                elif choose == "2":
+                    hist_chart1(data_score,semester,class_,subject)
+                    break
+            ## Pie
+                elif choose == "3":
+                    range_, bins = range_data1(data_score)
+                    pie_chart1(range_,bins ,semester ,class_ ,subject)
+                    break
+                elif choose == "4":
+                    one_object(num_class,class_sheet,subject,xlsx_path)
+                    break
+                else:
+                    print("Hãy nhập đúng giá trị phù hợp")
+    ## Quay lại
+        elif semester == "3":
+            one_object(num_class,class_sheet,subject,xlsx_path)
+def two_object(class_sheet,xlsx_path,subject):
+# chọn 2 đối tượng muốn vẽ
+    num_class1, num_class2 = pick_class2(class_sheet = class_sheet)
+# gán tên lớp vào class_1, class_2
+    class_1 = class_sheet[num_class1]
+    class_2 = class_sheet[num_class2]
+    print(class_1,class_2)
+    semester = pick_semester()
+## 2 học kỳ
+    if semester == "Cả hai":
+        data_mid_sem_1, data_mid_sem_2, data_end_sem_1, data_end_sem_2, \
+        colum_name1, colum_name2 = colum_data2_2c(xlsx_path, semester, class_1, class_2)
+        while True:
+            choose = input("Ở lựa chọn này chúng tôi chỉ hỗ trợ vẽ 1 biểu đồ \
+                            \n Chọn:\
+                            \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố\
+                            \n(2) Quay lại phần chọn lớp\
+                            \n--> ")
+        # Scater 
+            if choose == "1":
+                scatter_chart2(data_mid_sem_1 , data_mid_sem_2 ,data_end_sem_1 ,data_end_sem_2, subject,
+                               class_1 = class_1, class_2 = class_2, colum_name1 = colum_name1, colum_name2 = colum_name2)
+                break
+        # Quay lại
+            elif choose == "2":
+                two_object(class_sheet,xlsx_path,subject)
+                break
+            else:
+                print("Hãy nhập đúng giá trị phù hợp")
+## 1 học kỳ
+    elif semester == "Cuối kỳ" or semester =="Giữa kỳ":
+    # Lấy data của 2 lớp
+        data_score1,data_score2 = colum_data1_2c(xlsx_path,semester,class_1,class_2) 
+        while True:
+            choose = input("Chọn kiểu biểu đồ: \
+                            \n(1) Scatter chart - Biểu đồ thể hiện sự phân bố \
+                            \n(2) Histogram - Biểu đồ tần suất \
+                            \n(3) Pie chart - Biểu đồ tròn \
+                            \n(4) Quay lại\
+                            \n--> ")
+        # Scater 
+            if choose == "1":
+                sort_list1, value_list1 = count_score(data_score1)
+                sort_list2, value_list2 = count_score(data_score2)
+                scatter_chart2(sort_list1,sort_list2, value_list1 , value_list2,
+                                subject = subject,class_1 = class_1 , class_2 = class_2 , semester = semester)
+                break
+        # Histogram
+            elif choose == "2":
+                hist_chart2(data_hist1 = data_score1 ,
+                            data_hist2 = data_score2,
+                            subject = subject,
+                            class_1 = class_1,
+                            class_2 = class_2,
+                            semester = semester)
+                break
+        # Pie chart 
+            elif choose == "3":
+            # gán dữ liệu gồm 2 list số liệu và 2 list khoảng lấy số liệu
+                range_1, binss1, range_2 , binss2 = range_data2(data_range_1 = data_score1,
+                                                                data_range_2 = data_score2 )
+                pie_chart2( range_1, binss1, range_2 , binss2,
+                           subject = subject, class_1 = class_1,
+                           class_2 = class_2,
+                           semester = semester)      
+                break
+        # Quay lại
+            elif choose == "4":
+                two_object(class_sheet,xlsx_path,subject)
+                break
+            else:
+                print("Hãy nhập đúng giá trị phù hợp")
+## Quay lại
+    elif semester == "3":
+        two_object(class_sheet,xlsx_path,subject)

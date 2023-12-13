@@ -1,7 +1,7 @@
 import pandas as pd
 # import openpyxl
 from my_module.student import student_checking, get_core, get_core0, get_core1
-from my_module.lecturer import lecturer_checking, get_report, get_chart,get_subject
+from my_module.lecturer import lecturer_checking, get_report, get_chart
 from my_module.features import back_step, up_book, loading_mess
 
 lecturer_data_path = r'D:\PYTHON\Tieu_luan\account\lecturer.xlsx'
