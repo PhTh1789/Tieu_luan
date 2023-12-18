@@ -1,7 +1,7 @@
 import pandas as pd
 # import openpyxl
 from my_module.student import student_checking, get_core, get_core0, get_core1
-from my_module.lecturer import lecturer_checking, get_report, get_chart
+from my_module.lecturer import lecturer_checking, get_report, get_chart,back_step2
 from my_module.features import back_step, up_book, loading_mess
 
 lecturer_data_path = r'D:\PYTHON\Tieu_luan\account\lecturer.xlsx'
@@ -63,7 +63,7 @@ def lecturer() :
         if (option == "0") :
             print('\n')
             get_chart( )
-            back_step(name_function=lecturer, mess="Quay lại")
+            back_step2(name_function0 =get_chart,name_function1 =lecturer, mess="Quay lại")
             break
         
         # Nhánh xem phản hồi

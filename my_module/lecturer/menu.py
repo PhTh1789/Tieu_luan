@@ -40,7 +40,7 @@ def get_report(lecturer_id,score, lecturer_data):
         else:
            print("Lỗi: Giá trị nhập không phù hợp")
 
-## CHỌN MÔN-----------------------------------------------------------------------------------------------
+## ------------------------------------------------------CHỌN MÔN-----------------------------------------------------------
 def pick_subject() :
     score_folder_path = r"D:\PYTHON\Tieu_luan\score"
     subject_list = os.listdir(score_folder_path)
@@ -83,7 +83,7 @@ def pick_class(class_sheet):
     print(f"({len(class_sheet) + 1 }) quay lại")
     num_class = int(input("-->"))
     return num_class
-## Chọn lớp để so sánh
+## CHỌN LỚP SO SÁNH
 def pick_class2(class_sheet):
     while True:
         try:
@@ -100,7 +100,7 @@ def pick_class2(class_sheet):
     return num_class1, num_class2
 
 
-## CHỌN HỌC KỲ---------s-----------------------------------------------------------------------------------
+## CHỌN HỌC KỲ
 def pick_semester(mess = "quay lại"):
     while True:
             semester = input(f"Hãy chọn cột điểm: \
@@ -123,14 +123,16 @@ def pick_semester(mess = "quay lại"):
             else:
                 print("Hãy nhập đúng giá trị đã cho (0),(1),(2),(3)")
     return semester
+###------------------------------------------- CÁC HÀM LẤY VÀ TÍNH DỮ LIỆU CHO CHART--------------------------------------
 
-## LẤY DỮ LIỆU 1 colum--------------------------------------------------------------------------------------------
-    # 1 sheet 1 colum
+##----------------------------------------------------- LẤY DỮ LIỆU 1 colum---------------------------------------
+
+# 1 sheet 1 colum
 def colum_data1_1c(xlsx_path,colum_name,class_):
     data_excel = pd.read_excel(xlsx_path,class_)
     data_score = data_excel[colum_name].tolist()
     return data_score
-    # 2 sheet 1 colum
+# 2 sheet 1 colum
 def colum_data1_2c(xlsx_path,colum_name,class_1,class_2):
     data_excel1 = pd.read_excel(xlsx_path,class_1)
     data_excel2 = pd.read_excel(xlsx_path,class_2)
@@ -138,8 +140,8 @@ def colum_data1_2c(xlsx_path,colum_name,class_1,class_2):
     data_score2 = data_excel2[colum_name].tolist()
     return data_score1,data_score2
 
-## LẤY DỮ LIỆU 2 colums--------------------------------------------------------------------------------------------
-    # 1 sheet 2 colums
+## -----------------------------------------------------LẤY DỮ LIỆU 2 colums---------------------------------------
+# 1 sheet 2 colums
 def colum_data2_1c(xlsx_path,colum_name,class_):
         if colum_name == "Cả hai":
             colum_name1 = "Giữa kỳ"
@@ -149,7 +151,7 @@ def colum_data2_1c(xlsx_path,colum_name,class_):
             data_end_sem_1 = data_excel[colum_name2].tolist()
         return data_mid_sem_1 , data_end_sem_1 , colum_name1 , colum_name2
 
-    # 2 sheet 2 colums
+# 2 sheet 2 colums
 def colum_data2_2c(xlsx_path,colum_name,class_1,class_2):
         if colum_name == "Cả hai":
             colum_name1 = "Giữa kỳ"
@@ -165,19 +167,19 @@ def colum_data2_2c(xlsx_path,colum_name,class_1,class_2):
             data_end_sem_2 = data_excel2[colum_name2].tolist()
         return data_mid_sem_1 , data_mid_sem_2 ,data_end_sem_1 ,data_end_sem_2,colum_name1 , colum_name2
 
-## Đếm khoảng điểm cho 1 học kỳ
+## ------------------------------------------Đếm theo khoảng điểm cho 1 học kỳ------------------------------------------
 def range_data1(data_score): 
     # đếm số phần tử thõa mãn khoảng 5 khoảng cách đều từ 0 - 10 ( 0 - 2.5 - 5 - 7.5 - 10)
     range_ , bins = np.histogram(data_score,np.linspace(0,10,5))
     return range_, bins
-## Đếm khoảng điểm cho 2 học kỳ 
+## Đếm theo khoảng điểm cho 2 học kỳ 
 def range_data2(data_range_1 , data_range_2): 
     # đếm số phần tử thõa mãn khoảng 5 khoảng cách đều từ 0 - 10 ( 0 - 2.5 - 5 - 7.5 - 10)
     range_1 , binss1 = np.histogram(data_range_1,np.linspace(0,10,5))
     range_2 , binss2 = np.histogram(data_range_2,np.linspace(0,10,5))
     return range_1, binss1, range_2 , binss2
 
-# HÀM ĐẾM SỐ ĐIỂM CỦA HỌC KỲ --------------------------------------------------------------------------------------------
+# ------------------------------------------HÀM ĐẾM THEO SỐ ĐIỂM CỦA 1 HỌC KỲ --------------------------
 def count_score(data_score):
     # dữ liệu lấy từ colum data trả về dạng dictionary
     data_dict = {}
@@ -193,16 +195,14 @@ def count_score(data_score):
         value_list.append(data_dict[i])
     return sort_list,value_list
 
-##### -----------------------------CHART-----------------------------------------------------------------------------------------------------------------------------------------------------------
+##### --------------------------------------------------------CHART---------------------------------------------------------------------------------------------------------
 
-# Scatter chart cho 1 đối tượng--------------------------------------------------------------------------------------------
+# ---------------------------Scatter chart cho 1 đối tượng--------------------------------------------------------------------------------------------
 def scatter_chart1(x_data , y_data , subject , class_  , colum_name1 = any , colum_name2 = any, semester = any ):
     x = x_data
     y = y_data
     plt.style.use ('seaborn-v0_8-whitegrid')
     fig, ax = plt.subplots()
-    
-    #ax.plot(x,y);
     if (colum_name1 and colum_name2 ) == any:
 
         size = []
@@ -235,10 +235,9 @@ def scatter_chart1(x_data , y_data , subject , class_  , colum_name1 = any , col
 
         chart= ax.scatter(x,y,s= size,alpha = 0.7, c= colors, cmap  = 'viridis');
         fig.colorbar(chart).set_label( "Điểm tổng kết môn",fontsize = 14,fontweight = "bold", color = "gray");
-    
     plt.show();
 
-## scatter 2 đối tượng
+## ------------------------------------scatter 2 đối tượng
 def scatter_chart2(data_x_1 , data_x_2 ,data_y_1 ,data_y_2, subject,class_1 , class_2 ,
                     colum_name1 = any, colum_name2 = any, semester = any):
     x1 , y1 = data_x_1, data_y_1
@@ -331,7 +330,7 @@ def scatter_chart2(data_x_1 , data_x_2 ,data_y_1 ,data_y_2, subject,class_1 , cl
     
     plt.show();
         
-## Hist chart--------------------------------------------------------------------------------------------
+## ------------------------------------Hist chart--------------------------------------------------------------------------------------------
 def hist_chart1(data_hist,semester,class_,subject):
     plt.style.use ('seaborn-v0_8-whitegrid')
     # plt.legend();
@@ -343,17 +342,16 @@ def hist_chart1(data_hist,semester,class_,subject):
     ax.set_xlabel ("Điểm", fontsize = 14, fontweight = "bold", color = "gray" ) 
     ax.set_ylabel ("Count", fontsize = 14, fontweight = "bold", color = "gray")
     
-        
     plt.show();
 
-## Hist chart 2 lớp | 2 kỳ--------------------------------------------------------------------------------------------
+## ---------------------------Hist chart 2 lớp | 2 kỳ--------------------------------------------------------------------------------------------
 def hist_chart2(data_hist1 , data_hist2 ,subject, colum_name1 = any , colum_name2 = any,class_1 = any ,class_2 = any, class_ = any, semester = any):
     plt.style.use ('seaborn-v0_8-whitegrid')
     # plt.legend();
     fig, (ax1,ax2) = plt.subplots(1,2, figsize = (20,10))
     ax1.hist(data_hist1, color = "#00C9A7" ,edgecolor = "white")
     ax2.hist(data_hist2, color = "#00C9A7" ,edgecolor = "white")
-## Trường hợp cho 2 lớp
+## --------- 2 lớp
     if ( class_ and colum_name1 and colum_name2) == any:
         fig.suptitle(f"Biểu đồ so sánh điểm {semester} môn {subject} của 2 lớp ",
                     ha = 'center', va = 'top',
@@ -373,7 +371,7 @@ def hist_chart2(data_hist1 , data_hist2 ,subject, colum_name1 = any , colum_name
                         fontweight = "bold", color = "gray")
         ax2.set_title(f"Lớp {class_2}", fontsize = 16, 
                       fontweight = "bold" )
-## Trường hợp cho 2 học kỳ
+## --------- 2 học kỳ
     elif (semester and class_1  and class_2 ) == any:
         fig.suptitle(f"Biểu đồ so sánh điểm {colum_name1} và {colum_name2} môn {subject} của lớp {class_}  ",
                     ha = 'center', va = 'top',
@@ -404,7 +402,7 @@ def hist_chart2(data_hist1 , data_hist2 ,subject, colum_name1 = any , colum_name
                        fontweight = "bold" )
     plt.show();
 
-## pie chart 1 đối tượng
+## ------------------pie chart 1 đối tượng
 def pie_chart1(range_, bins, semester , class_ , subject ):
     labels = []
     size = [valu for valu in range_ if valu !=0]
@@ -425,7 +423,7 @@ def pie_chart1(range_, bins, semester , class_ , subject ):
                 )
     plt.show();
 
-## pie chart 2 đối tượng
+## ------------------pie chart 2 đối tượng
 def pie_chart2(range_1, binss1, range_2 , binss2 ,subject , 
                colum_name1 = any , colum_name2 = any , class_ = any, class_1 = any, class_2 = any, semester = any ):
     # sort_list,value_list = count_score(colum_data())
@@ -453,7 +451,7 @@ def pie_chart2(range_1, binss1, range_2 , binss2 ,subject ,
 
     ax2.pie(size2, colors = colors, autopct='%1.1f%%', counterclock=False, startangle=90);
 
-## Trường hợp cho 2 lớp
+## --------- 2 lớp
     if ( class_ and colum_name1 and colum_name2) == any:
 
         ax1.set_title(class_1, va = 'bottom',
@@ -475,7 +473,7 @@ def pie_chart2(range_1, binss1, range_2 , binss2 ,subject ,
                     loc = "center right",
                     frameon = True
                     )
-## Trường hợp cho 2 học kỳ
+## --------- 2 học kỳ
     elif (semester and class_1  and class_2 ) == any:
         ax1.set_title(colum_name1, va = 'bottom',
                    fontsize = 14, fontweight= 'bold',
@@ -493,7 +491,7 @@ def pie_chart2(range_1, binss1, range_2 , binss2 ,subject ,
                     frameon = True
                     )
     plt.show();
-
+### ---------------------------HÀM TỔNG CHO 1 ĐỐI TƯỢNG
 def one_object(num_class,class_sheet,subject,xlsx_path):
     ## gán biến tên lớp
         class_=class_sheet[num_class]
@@ -569,6 +567,7 @@ def one_object(num_class,class_sheet,subject,xlsx_path):
     ## Quay lại
         elif semester == "3":
             one_object(num_class,class_sheet,subject,xlsx_path)
+### ------------------------------------HÀM TỔNG CHO 2 ĐỐI TƯỢNG
 def two_object(class_sheet,xlsx_path,subject):
 # chọn 2 đối tượng muốn vẽ
     num_class1, num_class2 = pick_class2(class_sheet = class_sheet)
